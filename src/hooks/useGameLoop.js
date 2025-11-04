@@ -40,5 +40,5 @@ export const useGameLoop = () => {
             )
         );
         return newFood ;
-    })
+    }, [])
 };
