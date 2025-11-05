@@ -38,7 +38,7 @@ export const Cell = ({ isHead, isBody, isFood }) => {
 
       {isBody && !isHead && (
         <div
-        ClassName="absolute inset-1 bg-linear-to-br from- [--color-snake-primary] to-[--color-snake-secondary] rounded-sm"
+        ClassName="absolute inset-1 bg-linear-to-br from-[--color-snake-primary] to-[--color-snake-secondary] rounded-sm"
         style={{
             boxShadow:
             "0 0 5px var(--color-neon-glow, inset 0 0 5px rgba(0,0,0,0.3",
