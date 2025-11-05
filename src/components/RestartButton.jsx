@@ -11,7 +11,7 @@ export const RestartButton = () => {
     <div className="text-center mb-6">
       <button
         onClick={resetGame}
-        className="group relative px-10 py-4 bg-gradient-to-r from-[--color-snake-primary] to-[--color-snake-secondary] font-black text-xl text-black rounded-xl overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 tracking-wider"
+        className="group relative px-10 py-4 bg-linear-to-r from-[--color-snake-primary] to-[--color-snake-secondary] font-black text-xl text-black rounded-xl overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 tracking-wider"
         style={{
           boxShadow: '0 0 20px var(--color-neon-glow), 0 0 40px var(--color-neon-glow)'
         }}

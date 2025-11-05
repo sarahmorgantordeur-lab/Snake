@@ -1,4 +1,4 @@
-import { Cell } from "../Cell";
+import { Cell } from "./Cell";
 import { GRID_SIZE, CELL_SIZE } from "../constants/gameConfig";
 import { useGame } from "../context/GameContext";
 

@@ -6,7 +6,7 @@ function App() {
 
   return (
     <GameProvider>
-      <h1>Snake Game</h1>
+      <Game/>
     </GameProvider>
   )
 }
