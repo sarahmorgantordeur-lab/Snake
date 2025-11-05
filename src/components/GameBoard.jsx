@@ -25,7 +25,9 @@ export const GameBoard = () => {
       }}
     >
       {/* Bordure lumineuse*/}
-      <div className="absolute inset-1 bg-linear-to-r from-[--color-neon-glow] via-[--color-purple-accent] to-[--color-neon-glow] rounded-2xl blur opacity-75 animate-pulse"></div>
+      <div className="absolute inset-1 bg-linear-to-r from-[--color-neon-glow] via-[--color-purple-accent] to-[--color-neon-glow] rounded-2xl blur opacity-75 animate-pulse">
+        
+      </div>
 
       <div
         className="relative bg-[--color-board-bg] rounded-xl overflow-hidden border-4 border-[--color-board-border]"

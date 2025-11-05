@@ -13,7 +13,7 @@ export const useGame = () => {
     return context;
 };
 
-export const GameProvider = ({ Children }) => {
+export const GameProvider = ({ children }) => {
     const [snake, setSnake] = useState(INITIAL_SNAKE);
     const [direction, setDirection] = useState(INITIAL_DIRECTION);
     const [food, setFood] = useState(INITIAL_FOOD);
@@ -49,6 +49,6 @@ export const GameProvider = ({ Children }) => {
 
 
 
-    return <GameContext.Provider value={value}>{Children}</GameContext.Provider>
+    return <GameContext.Provider value={value}>{children}</GameContext.Provider>
 };
 

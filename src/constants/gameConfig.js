@@ -7,10 +7,10 @@ export const INITIAL_DIRECTION = { x:1, y:0 }
 export const INITIAL_FOOD = { x:15, y:15 }
 
 export const DIRECTIONS = {
-    UP: { x:0, y:-1},
-    DOWN: { x:0, y:1},
-    LEFT: { x:-1, y:0},
-    RIGHT: { x:1, y:0},
+    UP: { x: 0, y: -1 },
+    DOWN: { x: 0, y: 1 },
+    LEFT: { x: -1, y: 0 },
+    RIGHT: { x: 1, y: 0 },
 }
 
 export const KEYS = {

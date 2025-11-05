@@ -1,5 +1,5 @@
 import { useGame } from '../context/GameContext';
-import { KEYS, DIRECTION } from '../constants/gameConfig';
+import { KEYS, DIRECTIONS } from '../constants/gameConfig';
 import { useEffect } from 'react';
 
 
@@ -9,9 +9,9 @@ export const useKeyBoard = () => {
     const { gameStarted, setGameStarted, directionQueue, currentDirection } = useGame ();
 
     useEffect(() => {
-        const handleKeyPress = (event) => {
+        const handleKeyPress = (e) => {
             // démarrer le jeu si ce n'est pas djà le cas
-            if (!gameStarted && event.key.startsWith('Arrow')) { // la fonction startWith vérifie que la touche qu'on utilise son nom commence bien par 'Arrow'
+            if (!gameStarted && e.key.startsWith('Arrow')) { // la fonction startWith vérifie que la touche qu'on utilise son nom commence bien par 'Arrow'
                 setGameStarted(true);
             };
 
@@ -21,18 +21,18 @@ export const useKeyBoard = () => {
                     currentDirection.current;
 
             let newDirection = null;
-            switch (event.key) { //Empêche d'aller dans la direction opposée
+            switch (e.key) { //Empêche d'aller dans la direction opposée
                 case KEYS.ARROW_UP:
-                    if (lastDirection.y === 0) newDirection = DIRECTION.UP;
+                    if (lastDirection.y === 0) newDirection = DIRECTIONS.UP;
                     break;
                 case KEYS.ARROW_DOWN:
-                    if (lastDirection.y === 0) newDirection = DIRECTION.DOWN;
+                    if (lastDirection.y === 0) newDirection = DIRECTIONS.DOWN;
                     break;
                 case KEYS.ARROW_LEFT:
-                    if (lastDirection.x === 0) newDirection = DIRECTION.LEFT;
+                    if (lastDirection.x === 0) newDirection = DIRECTIONS.LEFT;
                     break;
                 case KEYS.ARROW_RIGHT:
-                    if (lastDirection.x === 0) newDirection = DIRECTION.RIGHT;
+                    if (lastDirection.x === 0) newDirection = DIRECTIONS.RIGHT;
                     break;
                 default:
                     break;

@@ -1,5 +1,6 @@
 import { GameProvider } from "./context/GameContext"
 import Game from './components/Game'
+import './App.css'
 
 function App() {
 

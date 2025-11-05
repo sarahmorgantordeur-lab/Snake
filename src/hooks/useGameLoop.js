@@ -1,126 +1,106 @@
-import { useGame } from '../context/GameContext';
-import { useEffect, useCallback } from 'react';
-import { GAME_SPEED, GRID_SIZE } from '../constants/gameConfig';
-
+import { useGame } from "../context/GameContext";
+import { useCallback, useEffect } from "react";
+import { GAME_SPEED, GRID_SIZE } from "../constants/gameConfig";
 
 export const useGameLoop = () => {
-    const {
-        
-        // State
-        snake,
-        direction,
-        food,
-        gameOver,
-        score,
-        gameStarted,
+  const {
+    snake,
+    setSnake,
+    direction,
+    setDirection,
+    food,
+    setFood,
+    gameOver,
+    setGameOver,
+    gameStarted,
+    setScore,
+    directionQueue,
+    currentDirection,
+  } = useGame();
 
-        // Setters
-        setSnake,
-        setDirection,
-        setFood,
-        setGameOver,
-        setScore,
-        setGameStarted,
+  // Générer une nouvelle position pour la nourriture
+  const generateFood = useCallback((currentSnake) => {
+    let newFood;
+    do {
+      newFood = {
+        x: Math.floor(Math.random() * GRID_SIZE),
+        y: Math.floor(Math.random() * GRID_SIZE),
+      };
+    } while (
+      currentSnake.some(
+        (segment) => segment.x === newFood.x && segment.y === newFood.y
+      )
+    );
+    return newFood;
+  }, []);
+  useEffect(() => {
+    if (!gameStarted || gameOver) return;
 
-        // Refs
-        directionQueue,
-        currentDirection,
+    const moveSnake = () => {
+      // Récupérer la prochaine direction de la file
+      let nextDirection = direction;
+      if (directionQueue.current.length > 0) {
+        //shift retire le premier élément de la queue et le retourne
+        nextDirection = directionQueue.current.shift();
+        setDirection(nextDirection);
+        currentDirection.current = nextDirection;
+      }
 
-    } = useGame();
+      setSnake((prevSnake) => {
+        const newHead = {
+          x: prevSnake[0].x + nextDirection.x,
+          y: prevSnake[0].y + nextDirection.y,
+        };
 
-    const generateFood = useCallback((currentSnake) => {
-        letNewFood;
-        do {
-            newFood = {
-                x:Math.floor(Math.random() * GRID_SIZE),
-                y: Math.floor(Math.random() * GRID_SIZE),
-            };
-        } while (
-            currentSnake.some(
-                (segment) => segment.x === newFood.x && segment.y === newFood.y
-            )
-        );
-        return newFood ;
-    }, [])
+        // Vérifier les collisions avec les murs
+        if (
+          newHead.x < 0 ||
+          newHead.x >= GRID_SIZE ||
+          newHead.y < 0 ||
+          newHead.y >= GRID_SIZE
+        ) {
+          setGameOver(true);
+          return prevSnake;
+        }
 
-    useEffect(() => {
-        if (!gameStarted || gameOver) return;
+        // Vérifier les collisions avec le corps
+        if (
+          prevSnake.some(
+            (segment) => segment.x === newHead.x && segment.y === newHead.y
+          )
+        ) {
+          setGameOver(true);
+          return prevSnake;
+        }
 
-        const moveSnake = () => {
-            //Récupérer la prochaine direction de la file
-            let nextDirection = direction;
-            if  (directionQueue.current.length > 0) {
-                nextDirection = directionQueue.current.shift(); 
-                //shift en js supprime le premier élément d'un array et le retourne
-                setDirection(nextDirection);
-                //pour que le serpent tourne et que le reste suive
-                currentDirection.current = nextDirection;
-            }
+        const newSnake = [newHead, ...prevSnake];
 
-            setSnake((prevSnake) => {
-                const newHead = {
-                    //calcule la nouvelle position de la tête
-                    x: prevSnake[0].x + nextDirection.x,
-                    y: prevSnake[0].y + nextDirection.y,
-                };
+        // Vérifier si le serpent mange la nourriture
+        if (newHead.x === food.x && newHead.y === food.y) {
+          setScore((s) => s + 10);
+          setFood(generateFood(newSnake));
+        } else {
+          newSnake.pop();
+        }
 
-                //vérifier les collisions avec les murs
-                if (
-                    newHead.x < 0 ||
-                    newHead.x >= GRID_SIZE ||
-                    newHead.y < 0 ||
-                    newHead.y >= GRID_SIZE
-                ) {
-                    setGameOver(true);
-                    return prevSnake;
-                }
-
-                //vérifier les collisions avec le corps
-                if (prevSnake.some( 
-                    //some permet de vérifier si un élément existe dans un array
-                    (segment) => segment.x === newHead.x && newHead.y === newHead.y
-                )
-            ) {
-                setGameOver(true);
-                return prevSnake;
-            };
-            const newSnake = [newHead, ...prevSnake];
-            
-
-            //vérifier sir le serpent mange la nourriture
-            if (newHead.x === food.x && newHead.y === FileSystemDirectoryHandle.y) {
-                setScore((s) => s+10);
-                setFood(generateFood(newSnake));
-            } else {
-                //si on mange pas on continue à avancer
-                newSnake.pop(); 
-            }
-
-            return newSnake;
-        });
+        return newSnake;
+      });
     };
 
     const gameInterval = setInterval(moveSnake, GAME_SPEED);
     return () => clearInterval(gameInterval);
-    }, [
-        // State
-        snake,
-        direction,
-        food,
-        gameOver,
-        score,
-        gameStarted,
-
-        // Setters
-        setSnake,
-        setDirection,
-        setFood,
-        setGameOver,
-        setScore,
-        setGameStarted,
-
-        // Refs
-        directionQueue,
-        currentDirection,
-    ]);
+  }, [
+    direction,
+    food,
+    gameOver,
+    gameStarted,
+    generateFood,
+    setSnake,
+    setDirection,
+    setFood,
+    setGameOver,
+    setScore,
+    directionQueue,
+    currentDirection,
+  ]);
 };
