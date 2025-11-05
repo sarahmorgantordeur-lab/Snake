@@ -5,15 +5,14 @@ export const Cell = ({ isHead, isBody, isFood }) => {
     <div
       className={`relative transition-all duration-75 ${
         !isBody && !isFood ? "bg-[--color-board-cell]" : ""
-      }`}
+      } `}
       style={{
-        //si la cellule est vide
         width: CELL_SIZE,
         height: CELL_SIZE,
-        border: "0.5px solid rgba(30, 39, 56, 0.3)",
+        border: "0.5px solid rgba(30, 39 , 56 , 0.3)",
       }}
     >
-      {isFood && ( //si la cellule est une nouriture
+      {isFood && (
         <div className="absolute inset-0 flex items-center justify-center">
           <div
             className="w-4 h-4 bg-[--color-food] rounded-full"
@@ -25,25 +24,20 @@ export const Cell = ({ isHead, isBody, isFood }) => {
           />
         </div>
       )}
-
-      {/*Le 'isHead && (...)' est une nomenclature de react pour un rendu conditionnel (comme un if et le '&&' dit 'tu fais ça') */}
-      {isHead && ( //si la cellule est une tête
+      {isHead && (
         <div
-        className='absolute inset-0.5 bg-[--color-snake-head] rounded-sm'
-        style={{
-            boxShadow: '0 0 10px var(--color-neon-glow), 0 0 20px var(--color-neon-glow), inset 0 0 10px rgba(255, 255, 255, 0.5)',
-        }}
+          className="absolute inset-0.5 bg-[--color-snake-head] rounded-sm"
+          style={{
+            boxShadow:
+              "0 0 10px var(--color-neon-glow), 0 0 20px var(--color-neon-glow), inset 0 0 10px rgba(255,255,255,0.5)",
+          }}
         />
       )}
-
       {isBody && !isHead && (
-        <div
-        ClassName="absolute inset-1 bg-linear-to-br from-[--color-snake-primary] to-[--color-snake-secondary] rounded-sm"
+        <div className="absolute inset-1 bg-linear-to-br from-[--color-snake-primary] to-[--color-snake-secondary] rounded-sm animate-pulse"
         style={{
-            boxShadow:
-            "0 0 5px var(--color-neon-glow, inset 0 0 5px rgba(0,0,0,0.3",
-        }}
-        />
+            boxShadow:'0 0 5px var(--color-neon-glow), inset 0 0 5px rgba(0,0,0,0.3)',
+        }} />
       )}
     </div>
   );
