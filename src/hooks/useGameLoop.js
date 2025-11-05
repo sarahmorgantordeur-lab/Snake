@@ -51,7 +51,7 @@ export const useGameLoop = () => {
             let nextDirection = direction;
             if  (directionQueue.current.length > 0) {
                 nextDirection = directionQueue.current.shift(); 
-                //shift en js supprime le premier élément d'un array et de le retourne
+                //shift en js supprime le premier élément d'un array et le retourne
                 setDirection(nextDirection);
                 //pour que le serpent tourne et que le reste suive
                 currentDirection.current = nextDirection;
@@ -76,7 +76,8 @@ export const useGameLoop = () => {
                 }
 
                 //vérifier les collisions avec le corps
-                if (prevSnake.some( //some permet de vérifier si un élément existe dans un array
+                if (prevSnake.some( 
+                    //some permet de vérifier si un élément existe dans un array
                     (segment) => segment.x === newHead.x && newHead.y === newHead.y
                 )
             ) {
@@ -84,7 +85,42 @@ export const useGameLoop = () => {
                 return prevSnake;
             };
             const newSnake = [newHead, ...prevSnake];
-            })
-        }
-    })
+            
+
+            //vérifier sir le serpent mange la nourriture
+            if (newHead.x === food.x && newHead.y === FileSystemDirectoryHandle.y) {
+                setScore((s) => s+10);
+                setFood(generateFood(newSnake));
+            } else {
+                //si on mange pas on continue à avancer
+                newSnake.pop(); 
+            }
+
+            return newSnake;
+        });
+    };
+
+    const gameInterval = setInterval(moveSnake, GAME_SPEED);
+    return () => clearInterval(gameInterval);
+    }, [
+        // State
+        snake,
+        direction,
+        food,
+        gameOver,
+        score,
+        gameStarted,
+
+        // Setters
+        setSnake,
+        setDirection,
+        setFood,
+        setGameOver,
+        setScore,
+        setGameStarted,
+
+        // Refs
+        directionQueue,
+        currentDirection,
+    ]);
 };
