@@ -74,9 +74,17 @@ export const useGameLoop = () => {
                     setGameOver(true);
                     return prevSnake;
                 }
+
+                //vérifier les collisions avec le corps
+                if (prevSnake.some( //some permet de vérifier si un élément existe dans un array
+                    (segment) => segment.x === newHead.x && newHead.y === newHead.y
+                )
+            ) {
+                setGameOver(true);
+                return prevSnake;
+            }
+            const newSnake = [newHead, ...prevSnake];
             })
         }
-
-
     })
 };
