@@ -3,7 +3,7 @@ import { GAME_SPEED, GAME_SIZE } from '../constants/gameConfig';
 
 
 export const useGameLoop = () => {
-    const { 
+    const {
         
         // State
         snake,
@@ -27,7 +27,7 @@ export const useGameLoop = () => {
 
     } = useGame();
 
-    const generateLoop = useCallback((currentSnake) => {
+    const generateFood = useCallback((currentSnake) => {
         letNewFood;
         do {
             newFood = {
@@ -41,4 +41,18 @@ export const useGameLoop = () => {
         );
         return newFood ;
     }, [])
+
+    useEffect(() => {
+        if (!gameStarted || gameOver) return;
+
+        const moveSnake = () => {
+            //Récupérer la prochaine direction de la file
+            let nextDirection = direction;
+            if  (directionQueue.current.length > 0) {
+                nextDirection = directionQueue.current.shift();
+                setDirection(nextDirection);
+                currentDirection.current = nextDirection;
+            }
+        }
+    })
 };
