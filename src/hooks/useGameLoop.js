@@ -82,7 +82,7 @@ export const useGameLoop = () => {
             ) {
                 setGameOver(true);
                 return prevSnake;
-            }
+            };
             const newSnake = [newHead, ...prevSnake];
             })
         }
